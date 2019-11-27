@@ -11,7 +11,7 @@
 #
 #  The above copyright notice and this permission notice shall be included in all
 #  copies or substantial portions of the Software.
-# 
+#
 #  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 #  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +28,7 @@ with open("README.md", "r") as f:
     f.close()
 
 setup(
-    name="make_to_batch",
+    name="make-to-batch",
     version=version,
     description="A Makefile to Batch converter.",
     license="MIT",
@@ -38,7 +38,7 @@ setup(
     author_email='esposito_andrea99@hotmail.com',
     url="https://github.com/espositoandrea/Make-to-Batch",
     packages=['make_to_batch'],
-    # download_url='https://github.com/espositoandrea/Make-to-Batch/archive/v1.0.tar.gz',
+    download_url='https://github.com/espositoandrea/Make-to-Batch/archive/v0.1.tar.gz',
     keywords=['Makefile', 'Batch', 'Shell', 'Windows', 'Linux', 'Converter'],
     install_requires=[
         "colorama",
