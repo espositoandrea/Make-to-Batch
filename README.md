@@ -1,8 +1,10 @@
 # Makefile to Batch
 
-[![License](https://img.shields.io/github/license/espositoandrea/Make-to-Batch?style=for-the-badge)](https://github.com/espositoandrea/Make-to-Batch/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/espositoandrea/Make-to-Batch)](https://github.com/espositoandrea/Make-to-Batch/blob/master/LICENSE)
 [![GitHub release (latest by
-date)](https://img.shields.io/github/v/release/espositoandrea/Make-to-Batch?style=for-the-badge)](https://github.com/espositoandrea/Make-to-Batch/releases/latest)
+date)](https://img.shields.io/github/v/release/espositoandrea/Make-to-Batch?include_prereleases)](https://github.com/espositoandrea/Make-to-Batch/releases/latest)
+[![PyPI](https://img.shields.io/pypi/v/make-to-batch)](https://pypi.org/project/make-to-batch/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=espositoandrea_Make-to-Batch&metric=alert_status)](https://sonarcloud.io/dashboard?id=espositoandrea_Make-to-Batch)
 
 This is a simple tool to convert a GNU Makefile into a Windows Batch file.
 
