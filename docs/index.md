@@ -1,10 +1,17 @@
-# Makefile to Batch
+# Make to Batch<!-- omit in toc -->
 
-[![License](https://img.shields.io/github/license/espositoandrea/Make-to-Batch?style=for-the-badge)](https://github.com/espositoandrea/Make-to-Batch/blob/master/LICENSE)
-[![GitHub release (latest by
-date)](https://img.shields.io/github/v/release/espositoandrea/Make-to-Batch?style=for-the-badge)](https://github.com/espositoandrea/Make-to-Batch/releases/latest)
+Welcome to the documentation of Make to Batch.
 
 This is a simple tool to convert a GNU Makefile into a Windows Batch file.
+
+## Table of Content<!-- omit in toc -->
+
+- [Code Documentation](#code-documentation)
+- [Usage](#usage)
+
+## Code Documentation
+
+Visit the [code documentation](make_to_batch/index.html).
 
 ## Usage
 
@@ -42,8 +49,3 @@ optional arguments:
                         set he name of the output batch file. Defaults is
                         './make.bat'
 ```
-
-## Contributing
-
-For more information on how to contribute, go to the file
-[CONTRIBUTING.md](CONTRIBUTING.md)

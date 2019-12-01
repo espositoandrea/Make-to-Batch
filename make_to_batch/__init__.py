@@ -20,4 +20,81 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-__version__ = "0.1.1"
+import argparse
+import os
+
+import colorama
+
+from make_to_batch.makefile import Makefile
+
+__version__ = "0.1.2"
+
+
+def setup_args():
+    """Set the tool's arguments.
+
+    Returns
+    -------
+    Dict[str, Any]
+        A dictionary containing all the arguments values. The keys are the
+        following:
+        * 'input': The name of the Makefile to be converted.
+        * 'output': The name of the output batch file.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the Makefile provided via command line arguments does not exists.
+    """
+    parser = argparse.ArgumentParser(
+        prog='make-to-batch',
+        description='Convert a Makefile to a Batch (Windows) file.'
+    )
+    parser.add_argument(
+        '-v', '--version',
+        action='version',
+        version=f'%(prog)s {__version__}'
+    )
+    parser.add_argument(
+        '-i', '--input',
+        help="set the makefile to be converted. Defaults is './Makefile'",
+        default='./Makefile'
+    )
+    parser.add_argument(
+        '-o', '--output',
+        help="set he name of the output batch file. Defaults is './make.bat'",
+        default='./make.bat'
+    )
+
+    args = parser.parse_args()
+
+    if not os.path.exists(args.input):
+        raise FileNotFoundError(f"The Makefile '{args.input}' does not exists.")
+
+    return args
+
+
+def run():
+    """The main function.
+    Run the tool.
+    """
+    colorama.init()
+
+    try:
+        args = setup_args()
+    except FileNotFoundError as e:
+        print(f"{colorama.Fore.RED}ERROR: {e}{colorama.Style.RESET_ALL}")
+        return
+
+    makefile = Makefile()
+
+    # Read the content of the Makefile
+    with open(args.input, "r") as f:
+        makefile.parse_file(f.read())
+
+    # Create the output directories
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+
+    # Create and write the output file
+    with open(args.output, "w") as f:
+        f.write(makefile.to_batch())

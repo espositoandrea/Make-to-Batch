@@ -21,6 +21,7 @@
 #  SOFTWARE.
 
 from setuptools import setup
+
 from make_to_batch import __version__ as version
 
 with open("README.md", "r") as f:

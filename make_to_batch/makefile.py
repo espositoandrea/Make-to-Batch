@@ -25,11 +25,32 @@ import re
 
 
 class Makefile:
+    """The representation of a Makefile.
+    It is composed of rules and variables. A Makefile starts with no rules and
+    no variables.
+
+    Attributes
+    ----------
+    __rules : Dict[str, Dict[List[str], List[str]]
+        The rules of the Makefile.
+    __variables : Dict[str, Any]
+        The variables of the Makefile.
+    """
+
     def __init__(self):
+        """Create an empty Makefile
+        """
         self.__rules = {}
         self.__variables = {}
 
     def parse_file(self, file_content: str) -> None:
+        """Parse an existing Makefile.
+
+        Parameters
+        ----------
+        file_content : str
+            The content of an existing Makefile.
+        """
         file_content = re.sub(r'''\s*?\\\n\s*''', ' ', file_content)
         variable_pattern = re.compile(r'''^([^:#= ]*?) *?= *(?:\\?\n\s*|)("\s*?.*?\s*?"|.*?)$''', re.MULTILINE)
         target_pattern = re.compile(r'''^(.*?):\s*?(.*?)\s*?\n((?:(?:\t| {4}).*?\n)*)''', re.MULTILINE)
@@ -53,6 +74,19 @@ class Makefile:
 
     @staticmethod
     def __prerequisites_from_string(string: str) -> List[str]:
+        """
+        Get a rule's prerequisites from a string.
+
+        Parameters
+        ----------
+        string : str
+            A string containing the prerequisites.
+
+        Returns
+        -------
+        List[str]
+            A list of prerequisites.
+        """
         string = string.strip()
         string = re.sub(r'''^(?:\|\s*)''', '', string)
         prerequisites = string.split(" ")
@@ -60,30 +94,91 @@ class Makefile:
 
     @staticmethod
     def __recipe_from_string(string: str) -> List[str]:
+        """Get a rule's recipe from a string.
+
+        Parameters
+        ----------
+        string : str
+            A string containing the rule's recipe.
+
+        Returns
+        -------
+        List[str]
+            A list of commands forming the recipe.
+        """
         recipe = string.strip().split('\n')
         return recipe if recipe != [""] else []
 
     def add_rule(self, target: str, prerequisites: List[str], recipe: List[str]) -> None:
+        """Add a rule to the Makefile.
+
+        Parameters
+        ----------
+        target : str
+            The new target's name.
+        prerequisites : List[str]
+            The new target's prerequisites.
+        recipe : List[str]
+            The new target's recipe.
+        """
         self.__rules[target] = {
             'prerequisites': prerequisites,
             'recipe': recipe
         }
 
     def remove_rule(self, target: str) -> None:
+        """Remove a rule from the Makefile.
+        If the rule is not in the Makefile, do nothing.
+
+        Parameters
+        ----------
+        target : str
+            The target to be removed.
+        """
         if target in self.__rules:
             del self.__rules[target]
 
     def remove_variable(self, variable: str) -> None:
+        """Remove a variable from the Makefile.
+        If the variable is not in the Makefile, do nothing.
+
+        Parameters
+        ----------
+        variable : str
+            The variable to be removed.
+        """
         if variable in self.__rules:
             del self.__variables[variable]
 
     def add_variable(self, name: str, value: Any) -> None:
+        """Add a variable to the Makefile.
+
+        Parameters
+        ----------
+        name : str
+            The new variable's name.
+        value : Any
+            The new variable's value.
+        """
         self.__variables[name] = value
 
     @staticmethod
     def __convert_command_to_batch(old_command: str) -> str:
+        """Convert a Makefile command to a batch command.
+
+        Parameters
+        ----------
+        old_command : str
+            The command to be converted.
+
+        Returns
+        -------
+        str
+            The equivalent command in batch. If no equivalent command is found, return the starting command.
+        """
         lookup = {
             re.compile(r'''^cp (.*?)\s+?(.*?)$'''): r'''XCOPY /Q /F \1''',
+            re.compile(r'''^mkdir (.*?)$'''): r'''MKDIR \1''',
             re.compile(r'''^rm\s+?(?:-f\s+?)?(.*?)$'''): r'''DEL /Q /F \1'''
         }
         commands_list = old_command.strip().split("&&")
@@ -110,6 +205,13 @@ class Makefile:
         return re.sub(r"\$[({](.*?)[)}]", r"%\1%", " && ".join(batch_commands))
 
     def to_batch(self) -> str:
+        """ Convert the Makefile to a Batch file.
+
+        Returns
+        -------
+        str
+            The batch file's content.
+        """
         batch_content = "@echo off\n\n"
         for var in self.__variables:
             batch_content += f"SET {var}={self.__variables[var]}\n"
