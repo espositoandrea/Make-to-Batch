@@ -39,7 +39,7 @@ setup(
     author_email='esposito_andrea99@hotmail.com',
     url="https://github.com/espositoandrea/Make-to-Batch",
     packages=['make_to_batch'],
-    download_url='https://github.com/espositoandrea/Make-to-Batch/archive/v0.1.tar.gz',
+    download_url='https://github.com/espositoandrea/Make-to-Batch/archive/v0.1.2.tar.gz',
     keywords=['Makefile', 'Batch', 'Shell', 'Windows', 'Linux', 'Converter'],
     install_requires=[
         "colorama",
