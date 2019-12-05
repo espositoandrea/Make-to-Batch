@@ -21,7 +21,10 @@
 #  SOFTWARE.
 
 from typing import List, Any
+import make_to_batch.look_up_table as look_up_table
+import make_to_batch.parser as parser
 import re
+import logging
 
 
 class Makefile:
@@ -176,28 +179,29 @@ class Makefile:
         str
             The equivalent command in batch. If no equivalent command is found, return the starting command.
         """
-        lookup = {
-            re.compile(r'''^cp (.*?)\s+?(.*?)$'''): r'''XCOPY /Q /F \1''',
-            re.compile(r'''^mkdir (.*?)$'''): r'''MKDIR \1''',
-            re.compile(r'''^rm\s+?(?:-f\s+?)?(.*?)$'''): r'''DEL /Q /F \1'''
-        }
         commands_list = old_command.strip().split("&&")
         batch_commands = []
 
         number_of_dir_changed = 0
         for command in commands_list:
             command = command.strip()
+            parsed_command = parser.Parser(command)
+
+            logging.info(f"FOUND COMMAND: {parsed_command.program}\n" +
+                         f"\tOPTIONS: {parsed_command.options}\n" +
+                         f"\tPARAMETERS: {parsed_command.parameters}")
+
             match = re.match(r"^cd (.*?)$", command)
             if match:
                 number_of_dir_changed += 1
                 batch_commands.append(f"PUSHD {match.group(1)}")
                 continue
-            for key in lookup:
-                match = key.match(command)
-                if match:
-                    batch_commands.append(key.sub(lookup[key], command))
-                    break
-            batch_commands.append(command)
+            if parsed_command.program in look_up_table.linux_to_dos:
+                current_command = look_up_table.linux_to_dos[parsed_command.program]
+                options = [current_command['options'][opt] if opt in current_command['options'] else opt for opt in parsed_command.options]
+                batch_commands.append(current_command['command'] + " " + ' '.join(parsed_command.parameters) + ' ' + ' '.join(options))
+            else:
+                batch_commands.append(command)
 
         for i in range(number_of_dir_changed):
             batch_commands.append("POPD")
