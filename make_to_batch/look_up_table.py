@@ -26,6 +26,13 @@ linux_to_dos = {
         'options': {
             '--help': '/?',
         },
-        'parameters': 1
+    },
+    'rm': {
+        'command': 'DEL /Q',
+        'options': {
+            '--help': '/?',
+            '-f': '/F',
+        },
+
     },
 }
