@@ -76,6 +76,7 @@ def setup_args():
 
 def run():
     """The main function.
+    
     Run the tool.
     """
     colorama.init()

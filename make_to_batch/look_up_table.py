@@ -20,6 +20,16 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""The look-up tables.
+
+This module contains a look-up tables that can be used to convert a command from
+a Makefile (Linux) to its batch equivalent. Each look-up table is a dictionary
+where the keys are the Linux command and the values are dictionaries containing
+the batch command and its options. The options are then stored as another
+dictionary where the key represents the Linux command option and the value
+represents its batch equivalent.
+"""
+
 linux_to_dos = {
     'mkdir': {
         'command': 'MKDIR',

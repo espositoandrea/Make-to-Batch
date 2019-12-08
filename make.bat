@@ -12,11 +12,11 @@ GOTO error
 	GOTO :EOF
 
 :docs
-	pdoc --html ./make_to_batch --output-dir ./docs/ --overwrite
+	pdoc --html ./make_to_batch --output-dir ./docs/ --force
 	GOTO :EOF
 
 :dist
-	python setup.py sdist
+	py -3 setup.py sdist
 	twine upload dist/* --skip-existing
 	GOTO :EOF
 

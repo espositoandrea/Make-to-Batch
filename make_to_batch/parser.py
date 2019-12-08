@@ -19,10 +19,17 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
+"""The command-line parser module.
 
+This module contains the class Parser, that can be used to parse a command.
+"""
 
 class Parser:
-    """
+    """A command parser.
+
+    This class parses a command and exposes the program called, its arguments
+    and its options.
+
     Attributes
     ----------
     program : str
@@ -34,6 +41,7 @@ class Parser:
     """
 
     def __init__(self, command: str):
+        """Take a command as a string and parses it."""
         segments = command.split(' ')
         self.program = segments[0]
         segments = segments[1:]

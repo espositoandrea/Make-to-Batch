@@ -20,6 +20,12 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+"""The makefile module.
+
+This module contains a series of definition that are used to represent a
+Makefile.
+"""
+
 from typing import List, Any
 import make_to_batch.look_up_table as look_up_table
 import make_to_batch.parser as parser
@@ -29,6 +35,7 @@ import logging
 
 class Makefile:
     """The representation of a Makefile.
+
     It is composed of rules and variables. A Makefile starts with no rules and
     no variables.
 
@@ -54,7 +61,7 @@ class Makefile:
         file_content : str
             The content of an existing Makefile.
         """
-        file_content = re.sub(r'''\s*?\\\n\s*''', ' ', file_content)
+        file_content = re.sub(r'''\s*?\\\s*?\n\s*''', ' ', file_content)
         variable_pattern = re.compile(r'''^([^:#= ]*?) *?= *(?:\\?\n\s*|)("\s*?.*?\s*?"|.*?)$''', re.MULTILINE)
         target_pattern = re.compile(r'''^(.*?):\s*?(.*?)\s*?\n((?:(?:\t| {4}).*?\n)*)''', re.MULTILINE)
         matches = variable_pattern.findall(file_content)
@@ -131,6 +138,7 @@ class Makefile:
 
     def remove_rule(self, target: str) -> None:
         """Remove a rule from the Makefile.
+
         If the rule is not in the Makefile, do nothing.
 
         Parameters
@@ -143,6 +151,7 @@ class Makefile:
 
     def remove_variable(self, variable: str) -> None:
         """Remove a variable from the Makefile.
+
         If the variable is not in the Makefile, do nothing.
 
         Parameters
@@ -203,13 +212,13 @@ class Makefile:
             else:
                 batch_commands.append(command)
 
-        for i in range(number_of_dir_changed):
+        for _ in range(number_of_dir_changed):
             batch_commands.append("POPD")
 
         return re.sub(r"\$[({](.*?)[)}]", r"%\1%", " && ".join(batch_commands))
 
     def to_batch(self) -> str:
-        """ Convert the Makefile to a Batch file.
+        """Convert the Makefile to a Batch file.
 
         Returns
         -------
