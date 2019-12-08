@@ -43,6 +43,14 @@ linux_to_dos = {
             '--help': '/?',
             '-f': '/F',
         },
-
     },
+    'ls': {
+        'command': 'DIR',
+        'options': {
+            '--help': '/?',
+            '-l': '/Q',
+            '-a': '/A',
+            '--all': '/A',
+        },
+    }
 }
