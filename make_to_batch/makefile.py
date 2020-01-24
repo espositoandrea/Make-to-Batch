@@ -61,7 +61,8 @@ class Makefile:
         file_content : str
             The content of an existing Makefile.
         """
-        file_content = re.sub(r'''\s*?\\\s*?\n\s*''', ' ', file_content)
+        file_content = re.sub(r'''(?<!\\)\#.*?$''', '',file_content) # Remove comments
+        file_content = re.sub(r'''\s*?\\\s*?\n\s*''', ' ', file_content) # Transform all the multiline commands to single-line
         variable_pattern = re.compile(r'''^([^:#= ]*?) *?= *(?:\\?\n\s*|)("\s*?.*?\s*?"|.*?)$''', re.MULTILINE)
         target_pattern = re.compile(r'''^(.*?):\s*?(.*?)\s*?\n((?:(?:\t| {4}).*?\n)*)''', re.MULTILINE)
         matches = variable_pattern.findall(file_content)
