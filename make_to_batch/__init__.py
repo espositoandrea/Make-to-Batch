@@ -27,7 +27,7 @@ import colorama
 
 from make_to_batch.makefile import Makefile
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 def setup_args():
