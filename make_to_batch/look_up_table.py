@@ -52,5 +52,11 @@ linux_to_dos = {
             '-a': '/A',
             '--all': '/A',
         },
-    }
+    },
+    'cp': {
+        'command': 'XCOPY /Y',
+        'options': {
+            '--help': '/?',
+        },
+    },
 }
