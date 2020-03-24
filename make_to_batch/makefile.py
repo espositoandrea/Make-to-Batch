@@ -197,14 +197,14 @@ class Makefile:
             command = command.strip()
             parsed_command = parser.Parser(command)
 
-            logging.info(f"FOUND COMMAND: {parsed_command.program}\n" +
-                         f"\tOPTIONS: {parsed_command.options}\n" +
-                         f"\tPARAMETERS: {parsed_command.parameters}")
+            logging.info("FOUND COMMAND: {}\n".format(parsed_command.program) +
+                         "\tOPTIONS: {}\n".format(parsed_command.options) +
+                         "\tPARAMETERS: {}".format(parsed_command.parameters))
 
             match = re.match(r"^cd (.*?)$", command)
             if match:
                 number_of_dir_changed += 1
-                batch_commands.append(f"PUSHD {match.group(1)}")
+                batch_commands.append("PUSHD " + str(match.group(1)))
                 continue
             if parsed_command.program in look_up_table.linux_to_dos:
                 current_command = look_up_table.linux_to_dos[parsed_command.program]
@@ -230,22 +230,22 @@ class Makefile:
         """
         batch_content = "@echo off\n\n"
         for var in self.__variables:
-            batch_content += f"SET {var}={self.__variables[var]}\n"
+            batch_content += "SET {var}={val}\n".format(var=var, val=self.__variables[var])
 
         batch_content += "\n"
 
         for rule in self.__rules:
-            batch_content += f'''IF /I "%1"=="{rule}" GOTO {rule}\n'''
+            batch_content += '''IF /I "%1"=="{rule}" GOTO {rule}\n'''.format(rule=rule)
         if "all" in self.__rules:
-            batch_content += f'''IF /I "%1"=="" GOTO all\n'''
-        batch_content += f'''GOTO error\n'''
+            batch_content += '''IF /I "%1"=="" GOTO all\n'''
+        batch_content += '''GOTO error\n'''
 
         batch_content += "\n"
 
         for rule in self.__rules:
-            batch_content += f":{rule}\n"
+            batch_content += ":{}\n".format(rule)
             for prerequisite in self.__rules[rule]["prerequisites"]:
-                batch_content += f"\tCALL make.bat {prerequisite}\n"
+                batch_content += "\tCALL make.bat {}\n".format(prerequisite)
             for command in self.__rules[rule]["recipe"]:
                 batch_content += "\t" + Makefile.__convert_command_to_batch(command) + "\n"
             batch_content += "\tGOTO :EOF\n\n"

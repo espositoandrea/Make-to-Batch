@@ -1,3 +1,2 @@
 colorama
 pdoc3
-pytest

@@ -53,7 +53,7 @@ def setup_args():
     parser.add_argument(
         '-v', '--version',
         action='version',
-        version=f'%(prog)s {__version__}'
+        version='%(prog)s ' + str(__version__)
     )
     parser.add_argument(
         '-i', '--input',
@@ -69,7 +69,7 @@ def setup_args():
     args = parser.parse_args()
 
     if not os.path.exists(args.input):
-        raise FileNotFoundError(f"The Makefile '{args.input}' does not exists.")
+        raise FileNotFoundError("The Makefile '{}' does not exists.".format(args.input))
 
     return args
 
@@ -84,7 +84,7 @@ def run():
     try:
         args = setup_args()
     except FileNotFoundError as e:
-        print(f"{colorama.Fore.RED}ERROR: {e}{colorama.Style.RESET_ALL}")
+        print(colorama.Fore.RED + "ERROR: "+ str(e) + colorama.Style.RESET_ALL)
         return
 
     makefile = Makefile()
