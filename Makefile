@@ -3,8 +3,8 @@
 all: docs
 
 docs:
-	pdoc --html ./make_to_batch --output-dir ./docs/ --force
+	pdoc --html ./make_to_batch --html-dir ./docs/ --overwrite
 
 dist:
-	py -3 setup.py sdist
+	python3 setup.py sdist
 	twine upload dist/* --skip-existing

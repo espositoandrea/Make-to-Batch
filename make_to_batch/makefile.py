@@ -61,7 +61,7 @@ class Makefile:
         file_content : str
             The content of an existing Makefile.
         """
-        file_content = re.sub(r'''(?<!\\)\#.*?$''', '', file_content) # Remove comments
+        file_content = re.sub(r'''(?<!\\)\#.*?$''', '', file_content, flags=re.M) # Remove comments
         file_content = re.sub(r'''\s*?\\\s*?\n\s*''', ' ', file_content) # Transform all the multiline commands to single-line
         variable_pattern = re.compile(r'''^([^:#= ]*?) *?= *(?:\\?\n\s*|)("\s*?.*?\s*?"|.*?)$''', re.MULTILINE)
         target_pattern = re.compile(r'''^(.*?):\s*?(.*?)\s*?\n((?:(?:\t| {4}).*?\n)*)''', re.MULTILINE)
@@ -216,7 +216,9 @@ class Makefile:
         for _ in range(number_of_dir_changed):
             batch_commands.append("POPD")
 
-        return re.sub(r"\$[({](.*?)[)}]", r"%\1%", " && ".join(batch_commands))
+        batch_commands = re.sub(r"\$[({](.*?)[)}]", r"%\1%", " && ".join(batch_commands))
+        batch_commands = re.sub(r"%MAKE%", r"CALL make.bat", batch_commands)
+        return batch_commands
 
     def to_batch(self) -> str:
         """Convert the Makefile to a Batch file.

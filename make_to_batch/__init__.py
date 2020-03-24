@@ -27,7 +27,7 @@ import colorama
 
 from make_to_batch.makefile import Makefile
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 
 def setup_args():
@@ -94,7 +94,7 @@ def run():
         makefile.parse_file(f.read())
 
     # Create the output directories
-    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+    os.makedirs(os.path.dirname(args.output) or '.', exist_ok=True)
 
     # Create and write the output file
     with open(args.output, "w") as f:
