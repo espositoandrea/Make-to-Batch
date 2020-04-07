@@ -35,6 +35,7 @@ linux_to_dos = {
         'command': 'MKDIR',
         'options': {
             '--help': '/?',
+            '-p': ''
         },
     },
     'rm': {
