@@ -46,7 +46,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'make-to-batch = make_to_batch.__main__:run',
+            'make-to-batch = make_to_batch.cli:run',
         ],
     },
     classifiers=[
