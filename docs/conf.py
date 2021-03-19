@@ -15,6 +15,8 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../'))
 
+import make_to_batch.look_up_table as lut
+
 # -- Project information -----------------------------------------------------
 
 project = 'Make to Batch'
@@ -56,3 +58,19 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+# Adding the table of commands to the look up table docs.
+table_row = '''
+| {:16s} |  {:18s} |
++------------------+---------------------+
+'''.strip()
+lut.__doc__ += '''
+Available Commands
+------------------
++------------------+---------------------+
+|   Unix Command   |   Windows Command   |
++==================+=====================+
+''' + \
+    "\n".join(table_row.format("``"+k+"``", "``"+v['command']+"``")
+              for k, v in lut.linux_to_dos.items())
