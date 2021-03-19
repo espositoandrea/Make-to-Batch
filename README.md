@@ -45,7 +45,42 @@ optional arguments:
                         './make.bat'
 ```
 
+## License
+
+This tool/library is free software and is released under the [MIT
+License](LICENSE). You're free to copy, modify, and redistribute this tool in
+any way: all I ask is some credit (just a mention is enough) and I'd love the
+source code with your edits back.
+
+The choice of the license should allow you to use the tool in any context you
+like (either in free, open or proprietary contexts). If you should have any
+problem with it, I first apologize because I'm not a lawyer, then just contact
+me and we'll try to solve it together.
+
 ## Contributing
 
-For more information on how to contribute, go to the file
-[CONTRIBUTING.md](CONTRIBUTING.md)
+For more information on how to contribute, read
+[this comment](https://github.com/espositoandrea/Make-to-Batch/pull/2#issuecomment-703069158)
+and check the rules in the file [CONTRIBUTING.md](CONTRIBUTING.md)
+
+### In Short: What Should I Do?
+
+The short answer is: do whatever you want. No discussion is required to expand
+the number of commands available in the translation: if you want to add new
+commands or options, just add them to the [look up
+table](make_to_batch/look_up_table.py) and open a PR.
+
+Any modification to the architecture or structure of the tool is also welcomed:
+just open a new issue and we'll discuss about it.
+
+### Is there a Roadmap?
+
+There's not an actual structured roadmap for this tool: the main thing that
+needs to be done is to expand the set of recognized command.
+
+Nonetheless, there are some enhancements I'd like to bring into this tool: I'll
+leave a brief list here.
+
+- Allow the tool to read from `stdin` and write to `stdout` (in the standard
+  Unix fashion)
+- Enhance the [documentation](https://make-to-batch.readthedocs.io/)

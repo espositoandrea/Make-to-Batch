@@ -28,6 +28,16 @@ where the keys are the Linux command and the values are dictionaries containing
 the batch command and its options. The options are then stored as another
 dictionary where the key represents the Linux command option and the value
 represents its batch equivalent.
+
+A simple dictionary is exposed of type ``Dict[str, Dict[str, Union[str,
+Dict[str, str]]]]``.  The keys of the dictionary are the Unix commands to be
+translated, the value is, instead, another dictionary having two available
+keys:
+
+* ``command``: a string containing the Windows command that corresponds to the
+  Unix one.
+* ``options``: a dictionary containing, for each option of the Unix command,
+  the corresponding option in Windows.
 """
 
 linux_to_dos = {
