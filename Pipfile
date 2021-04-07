@@ -4,10 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pdoc3 = "*"
 flake8 = "*"
 pytest = "*"
 mypy = "*"
+types-colorama = "*"
 
 [packages]
 colorama = "*"
