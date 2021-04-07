@@ -7,9 +7,11 @@ verify_ssl = true
 pdoc3 = "*"
 flake8 = "*"
 pytest = "*"
+mypy = "*"
 
 [packages]
 colorama = "*"
 importlib-metadata = "==1.7.0"
+typing_extensions = "*"
 
 [requires]
