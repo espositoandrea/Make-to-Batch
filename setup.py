@@ -24,9 +24,8 @@ from setuptools import setup
 
 from make_to_batch import __version__ as version
 
-with open("README.md", "r") as f:
+with open("README.md") as f:
     long_description = f.read()
-    f.close()
 
 setup(
     name="make-to-batch",
@@ -55,7 +54,6 @@ setup(
         'Topic :: Utilities',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        # 'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
