@@ -216,9 +216,9 @@ class Makefile:
         for _ in range(number_of_dir_changed):
             batch_commands.append("POPD")
 
-        batch_commands = re.sub(r"\$[({](.*?)[)}]", r"%\1%", " && ".join(batch_commands))
-        batch_commands = re.sub(r"%MAKE%", r"CALL make.bat", batch_commands)
-        return batch_commands
+        batch_commands_str = re.sub(r"\$[({](.*?)[)}]", r"%\1%", " && ".join(batch_commands))
+        batch_commands_str = re.sub(r"%MAKE%", r"CALL make.bat", batch_commands_str)
+        return batch_commands_str
 
     def to_batch(self) -> str:
         """Convert the Makefile to a Batch file.

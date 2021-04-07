@@ -39,6 +39,10 @@ keys:
 * ``options``: a dictionary containing, for each option of the Unix command,
   the corresponding option in Windows.
 """
+from typing import Dict
+from typing_extensions import TypedDict
+
+LookUpTableContent = TypedDict('LookUpTableContent', {'command': str, 'options': Dict[str, str]})
 
 linux_to_dos = {
     'mkdir': {
@@ -70,4 +74,4 @@ linux_to_dos = {
             '--help': '/?',
         },
     },
-}
+}  # type: Dict[str, LookUpTableContent]
