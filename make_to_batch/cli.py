@@ -56,12 +56,12 @@ def setup_args():
     )
     parser.add_argument(
         '-i', '--input',
-        help="set the makefile to be converted. Defaults is './Makefile'",
+        help="set the makefile to be converted. Defaults to './Makefile'",
         default='./Makefile'
     )
     parser.add_argument(
         '-o', '--output',
-        help="set he name of the output batch file. Defaults is './make.bat'",
+        help="set the name of the output batch file. Defaults to './make.bat'",
         default='./make.bat'
     )
 
@@ -75,7 +75,7 @@ def setup_args():
 
 def run():
     """The main function.
-    
+
     Run the tool.
     """
     colorama.init()
