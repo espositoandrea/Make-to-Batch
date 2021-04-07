@@ -38,10 +38,10 @@ optional arguments:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
   -i INPUT, --input INPUT
-                        set the makefile to be converted. Defaults is
+                        set the makefile to be converted. Defaults to
                         './Makefile'
   -o OUTPUT, --output OUTPUT
-                        set he name of the output batch file. Defaults is
+                        set the name of the output batch file. Defaults to
                         './make.bat'
 ```
 
