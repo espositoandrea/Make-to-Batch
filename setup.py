@@ -24,9 +24,8 @@ from setuptools import setup
 
 from make_to_batch import __version__ as version
 
-with open("README.md", "r") as f:
+with open("README.md") as f:
     long_description = f.read()
-    f.close()
 
 setup(
     name="make-to-batch",
