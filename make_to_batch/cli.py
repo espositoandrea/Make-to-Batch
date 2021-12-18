@@ -21,12 +21,15 @@
 #  SOFTWARE.
 
 import argparse
+import locale
 import os
 
 import colorama
 
 from make_to_batch import __version__
 from make_to_batch.makefile import Makefile
+
+_DEFAULT_ENCODING = locale.getpreferredencoding(False)
 
 
 def setup_args():
@@ -64,6 +67,11 @@ def setup_args():
         help="set the name of the output batch file. Defaults to './make.bat'",
         default='./make.bat'
     )
+    parser.add_argument(
+        '-e', '--encoding',
+        help="set the encoding of the input and output file. Defaults to %s" % (repr(_DEFAULT_ENCODING),),
+        default=_DEFAULT_ENCODING,
+    )
 
     args = parser.parse_args()
 
@@ -87,14 +95,15 @@ def run():
         return
 
     makefile = Makefile()
+    encoding = args.encoding
 
     # Read the content of the Makefile
-    with open(args.input, "r") as f:
+    with open(args.input, "r", encoding=encoding) as f:
         makefile.parse_file(f.read())
 
     # Create the output directories
     os.makedirs(os.path.dirname(args.output) or '.', exist_ok=True)
 
     # Create and write the output file
-    with open(args.output, "w") as f:
+    with open(args.output, "w", encoding=encoding) as f:
         f.write(makefile.to_batch())
