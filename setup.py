@@ -43,6 +43,12 @@ setup(
     install_requires=[
         "colorama",
     ],
+    extras_require={
+        'test': [
+            'pytest~=5.4.3',
+            'pytest-cov~=2.10.1',
+        ]
+    },
     entry_points={
         'console_scripts': [
             'make-to-batch = make_to_batch.cli:run',
