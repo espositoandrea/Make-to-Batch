@@ -19,10 +19,11 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
-
 import argparse
 import locale
 import os
+import sys
+from typing import Optional, List
 
 import colorama
 
@@ -32,7 +33,7 @@ from make_to_batch.makefile import Makefile
 _DEFAULT_ENCODING = locale.getpreferredencoding(False)
 
 
-def setup_args():
+def setup_args(args: List[str]):
     """Set the tool's arguments.
 
     Returns
@@ -73,7 +74,7 @@ def setup_args():
         default=_DEFAULT_ENCODING,
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(args)
 
     if not os.path.exists(args.input):
         raise FileNotFoundError("The Makefile '{}' does not exists.".format(args.input))
@@ -81,15 +82,16 @@ def setup_args():
     return args
 
 
-def run():
+def run_with_args(args: Optional[List[str]] = None):
     """The main function.
 
     Run the tool.
     """
     colorama.init()
+    args = list(args or sys.argv[1:])
 
     try:
-        args = setup_args()
+        args = setup_args(args)
     except FileNotFoundError as e:
         print(colorama.Fore.RED + "ERROR: " + str(e) + colorama.Style.RESET_ALL)
         return
@@ -107,3 +109,7 @@ def run():
     # Create and write the output file
     with open(args.output, "w", encoding=encoding) as f:
         f.write(makefile.to_batch())
+
+
+def run():
+    return run_with_args(None)
