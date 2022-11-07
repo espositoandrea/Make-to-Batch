@@ -39,5 +39,5 @@ jobs:
         pipenv run mypy -p make_to_batch
     - name: Test with pytest
       run: |
-        pipenv run pip install .
-        pipenv run pytest
+        pipenv run pip install .[test]
+        pipenv run pytest -sv --cov-report term-missing --cov=./make_to_batch

@@ -19,17 +19,21 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
-
 import argparse
+import locale
 import os
+import sys
+from typing import Optional, List
 
 import colorama
 
 from make_to_batch import __version__
 from make_to_batch.makefile import Makefile
 
+_DEFAULT_ENCODING = locale.getpreferredencoding(False)
 
-def setup_args():
+
+def setup_args(args: List[str]):
     """Set the tool's arguments.
 
     Returns
@@ -64,8 +68,13 @@ def setup_args():
         help="set the name of the output batch file. Defaults to './make.bat'",
         default='./make.bat'
     )
+    parser.add_argument(
+        '-e', '--encoding',
+        help="set the encoding of the input and output file. Defaults to %s" % (repr(_DEFAULT_ENCODING),),
+        default=_DEFAULT_ENCODING,
+    )
 
-    args = parser.parse_args()
+    args = parser.parse_args(args)
 
     if not os.path.exists(args.input):
         raise FileNotFoundError("The Makefile '{}' does not exists.".format(args.input))
@@ -73,28 +82,34 @@ def setup_args():
     return args
 
 
-def run():
+def run_with_args(args: Optional[List[str]] = None):
     """The main function.
 
     Run the tool.
     """
     colorama.init()
+    args = list(args or sys.argv[1:])
 
     try:
-        args = setup_args()
+        args = setup_args(args)
     except FileNotFoundError as e:
         print(colorama.Fore.RED + "ERROR: " + str(e) + colorama.Style.RESET_ALL)
         return
 
     makefile = Makefile()
+    encoding = args.encoding
 
     # Read the content of the Makefile
-    with open(args.input, "r") as f:
+    with open(args.input, "r", encoding=encoding) as f:
         makefile.parse_file(f.read())
 
     # Create the output directories
     os.makedirs(os.path.dirname(args.output) or '.', exist_ok=True)
 
     # Create and write the output file
-    with open(args.output, "w") as f:
+    with open(args.output, "w", encoding=encoding) as f:
         f.write(makefile.to_batch())
+
+
+def run():
+    return run_with_args(None)
